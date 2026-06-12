@@ -1,17 +1,18 @@
 {
   "name": "m-team-preview-img",
-  "version": "1.0.1",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "version": "1.1.0",
+  "description": "为 M-Team 新版添加列表大图预览功能",
+  "author": "Seahor",
+  "type": "module",
+  "license": "https://github.com/SeahorZhang/m-team-preview-img",
   "scripts": {
-    "build": "vite build",  
+    "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.28.2",
   "devDependencies": {
-    "vite": "^7.3.1"
+    "esbuild": "^0.28.1",
+    "vite": "^8.0.16",
+    "vite-plugin-monkey": "^8.0.6"
   }
 }

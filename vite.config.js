@@ -1,14 +1,28 @@
-// vite.config.js
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
+import monkey from 'vite-plugin-monkey';
+import { version, description, author, license } from "./package.json";
 
+
+// https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    // 指定入口文件
-    rollupOptions: {
-      input: 'main.js', // 你想要压缩的文件
-    },
-    esbuild: {
-      drop: ['console', 'debugger'], // 可选：移除 console 和 debugger
-    },
+    minify: 'esbuild',
+    cssMinify: 'esbuild',
+    target: 'es2020',
+    sourcemap: false,
   },
-});
+  plugins: [
+    monkey({
+      entry: 'src/main.js',
+      userscript: {
+        name: 'M-Team 新版列表大图预览',
+        version,
+        description,
+        author,
+        license,
+        match: ['*.m-team.*'],
+        icon: 'https://next.m-team.cc/favicon.ico',
+      },
+    }),
+  ],
+})

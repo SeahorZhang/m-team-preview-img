@@ -5,7 +5,6 @@ const SELECTORS = {
   container: ".ant-table-wrapper",
 };
 
-const STORAGE_KEY = "image-preview-enabled";
 const PREVIEW_MAX_WIDTH_RATIO = 0.5;
 const PREVIEW_MAX_HEIGHT_RATIO = 0.72;
 
@@ -14,7 +13,6 @@ let currentImage = null;
 let initialized = false;
 let bound = false;
 let pendingLoader = null;
-let previewEnabled = localStorage.getItem(STORAGE_KEY) !== "false";
 
 function createPreviewElement() {
   if (previewEl) {
@@ -97,10 +95,6 @@ function updatePreviewPosition(target, width, height) {
 }
 
 function renderPreview(img) {
-  if (!previewEnabled) {
-    return
-  }
-
   currentImage = img
   if (!previewEl) {
     createPreviewElement()
@@ -150,10 +144,6 @@ function isSameImageArea(event, img) {
 }
 
 function handleMouseOver(event) {
-  if (!previewEnabled) {
-    return
-  }
-
   const img = getImageFromEvent(event)
   if (!img || isSameImageArea(event, img)) {
     return
@@ -163,10 +153,6 @@ function handleMouseOver(event) {
 }
 
 function handleMouseOut(event) {
-  if (!previewEnabled) {
-    return
-  }
-
   const img = getImageFromEvent(event)
   if (!img || isSameImageArea(event, img)) {
     return
@@ -211,18 +197,7 @@ function cleanup() {
   initialized = false
 }
 
-function syncPreviewEnabled() {
-  previewEnabled = localStorage.getItem(STORAGE_KEY) !== "false"
-}
-
 function initDirectImagePreview() {
-  syncPreviewEnabled()
-
-  if (!previewEnabled) {
-    cleanup()
-    return
-  }
-
   if (initialized) {
     return
   }
@@ -234,11 +209,7 @@ function initDirectImagePreview() {
 
 function reinitDirectImagePreview() {
   cleanup()
-  syncPreviewEnabled()
-
-  if (previewEnabled) {
-    initDirectImagePreview()
-  }
+  initDirectImagePreview()
 }
 
 function runWhenReady(task) {
